@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Eco-Friendly Path — 15 Weeks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- FONTS: Indie Flower (Cursive) & M PLUS Rounded 1c (Rounded Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower:wght@600;700&family=M+PLUS+Rounded+1c:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-snap-type: y proximity;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            /* Light Mint Background */
+            background: #F0FDF4; 
+            /* Dark Emerald Text */
+            color: #064E3B; 
+            overflow-x: hidden;
+        }
+
+        /* ── ambient background blobs (Green Theme) ── */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blob-1 {
+            width: 500px; height: 500px;
+            /* Light Green Blob */
+            background: rgba(167, 243, 208, 0.6); 
+            top: -100px; left: -150px;
+            animation: blobDrift1 18s ease-in-out infinite alternate;
+        }
+        .blob-2 {
+            width: 400px; height: 400px;
+            /* Lime Green Blob */
+            background: rgba(190, 242, 100, 0.5); 
+            bottom: -80px; right: -120px;
+            animation: blobDrift2 22s ease-in-out infinite alternate;
+        }
+        .blob-3 {
+            width: 300px; height: 300px;
+            /* Emerald Transparent */
+            background: rgba(16, 185, 129, 0.15); 
+            top: 40%; left: 50%;
+            animation: blobDrift3 15s ease-in-out infinite alternate;
+        }
+        @keyframes blobDrift1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 60px) scale(1.15); }
+        }
+        @keyframes blobDrift2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-60px, -80px) scale(1.2); }
+        }
+        @keyframes blobDrift3 {
+            0% { transform: translate(-50%, 0) scale(1); }
+            100% { transform: translate(-50%, -50px) scale(1.1); }
+        }
+
+        /* ── floating particles ── */
+        #particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: var(--p-opacity, 0.5); transform: translateY(-10vh) translateX(5px) scale(1); }
+            85% { opacity: calc(var(--p-opacity, 0.5) * 0.8); }
+            100% { transform: translateY(-105vh) translateX(var(--p-drift, -15px)) scale(0.4); opacity: 0; }
+        }
+
+        /* ── hero ── */
+        .hero {
+            min-height: 100vh;
+            scroll-snap-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+        }
+        .hero-title {
+            /* FONT: Indie Flower (Cursive) */
+            font-family: 'Indie Flower', cursive;
+            font-size: clamp(4rem, 10vw, 6.5rem);
+            font-weight: 700;
+            /* Green Gradient */
+            background: linear-gradient(135deg, #059669, #10B981, #34D399);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease infinite;
+            line-height: 1.2;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero-sub {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            color: #047857;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        .hero-deco {
+            color: #10B981;
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5em;
+            opacity: 0.8;
+        }
+        .scroll-cue {
+            position: absolute;
+            bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #059669;
+            font-size: 0.95rem;
+            animation: cueBounce 2.2s ease-in-out infinite;
+        }
+        .scroll-cue span {
+            display: block;
+            width: 18px; height: 28px;
+            border: 2px solid rgba(5, 150, 105, 0.4);
+            border-radius: 9px;
+            position: relative;
+        }
+        .scroll-cue span::after {
+            content: '';
+            position: absolute;
+            width: 3px; height: 7px;
+            background: #059669;
+            border-radius: 2px;
+            top: 5px; left: 50%;
+            transform: translateX(-50%);
+            animation: cueDot 2.2s ease-in-out infinite;
+        }
+        @keyframes cueBounce {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(8px); opacity: 1; }
+        }
+        @keyframes cueDot {
+            0% { top: 5px; opacity: 1; }
+            100% { top: 16px; opacity: 0; }
+        }
+
+        /* ── week sections ── */
+        .week-section {
+            min-height: 100vh;
+            scroll-snap-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem 1rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.4;
+            transform: scale(0.95);
+            filter: blur(2px);
+        }
+        .week-section.active {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+        }
+        .week-section.near {
+            opacity: 0.7;
+            transform: scale(0.98);
+            filter: blur(1px);
+        }
+        .week-section.last-week {
+            min-height: auto;
+            padding: 2.5rem 1rem;
+            scroll-snap-align: start;
+        }
+
+        .week-card {
+            background: rgba(255, 255, 255, 0.75); 
+            border: 1px solid rgba(16, 185, 129, 0.3); 
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            max-width: 620px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(16, 185, 129, 0.1);
+        }
+        .week-section.active .week-card {
+            border-color: rgba(16, 185, 129, 0.6);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.15);
+        }
+        .week-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #6EE7B7, #10B981, #059669, transparent);
+            opacity: 0;
+            transition: opacity 0.55s;
+        }
+        .week-section.active .week-card::before { opacity: 1; }
+
+        .week-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #D1FAE5;
+            color: #065F46;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            border: 1px solid #A7F3D0;
+            font-weight: 700;
+        }
+        .week-title {
+            /* FONT: Indie Flower (Cursive) */
+            font-family: 'Indie Flower', cursive;
+            font-size: 2.2rem;
+            color: #064E3B; 
+            margin: 0.6rem 0 0.5rem;
+            line-height: 1.2;
+            font-weight: 600;
+        }
+        .week-desc {
+            font-size: 1.05rem;
+            color: #065F46;
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        /* ── photo grid ── */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin: 0.75rem 0;
+        }
+        .photo-grid.cols-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .photo-grid img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 1rem;
+            transition: transform 0.35s, filter 0.35s, box-shadow 0.35s;
+            filter: brightness(0.9) sepia(0.1);
+            background-color: #D1FAE5;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        .week-section.active .photo-grid img:hover {
+            transform: scale(1.05);
+            filter: brightness(1) sepia(0);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
+            z-index: 10;
+        }
+
+        /* ── side navigation dots ── */
+        .week-nav {
+            position: fixed;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            z-index: 100;
+        }
+        .week-nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.2);
+            transition: all 0.35s;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+        .week-nav-dot:hover {
+            background: rgba(16, 185, 129, 0.5);
+        }
+        .week-nav-dot.active {
+            background: #10B981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            transform: scale(1.4);
+        }
+
+        /* ── footer ── */
+        .site-footer {
+            position: relative;
+            z-index: 2;
+            background: #D1FAE5;
+            border-top: 2px solid #A7F3D0;
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+            min-height: 12vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .footer-deco {
+            color: #059669;
+            font-size: 1.2rem;
+            letter-spacing: 0.6em;
+            opacity: 0.4;
+        }
+        .footer-name {
+            /* FONT: Indie Flower */
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.8rem;
+            color: #064E3B;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        .footer-copy {
+            font-size: 0.85rem;
+            color: #065F46;
+            margin-top: 0.2rem;
+        }
+        .footer-thanks {
+            font-size: 0.9rem;
+            color: #059669;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* ── LIGHTBOX / MODAL STYLES ── */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            /* Dark Green Overlay */
+            background-color: rgba(6, 78, 59, 0.9); 
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: zoom-out;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 1rem;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            object-fit: contain;
+            border: 4px solid white;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+            z-index: 2001;
+        }
+        .close-modal:hover { color: #D1FAE5; }
+
+        .modal-caption {
+            margin-top: 15px;
+            color: #D1FAE5;
+            font-size: 1.3rem;
+            text-align: center;
+            /* FONT: Indie Flower */
+            font-family: 'Indie Flower', cursive;
+        }
+
+        /* ── responsive ── */
+        @media (max-width: 640px) {
+            .week-card { padding: 1.15rem; }
+            .photo-grid img { height: 85px; }
+            .week-nav { right: 0.4rem; gap: 0.3rem; }
+            .week-nav-dot { width: 6px; height: 6px; }
+            .site-footer { padding: 2.5rem 1rem 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ambient blobs -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    < <div class="bg-blob blob-3"></div>
+
+    <!-- floating particles -->
+    <div id="particles"></div>
+
+    <!-- side nav dots -->
+    <nav class="week-nav" id="weekNav" aria-label="Week navigation"></nav>
+
+    <main>
+        <!-- ═══════ HERO ═══════ -->
+        <section class="hero" id="heroSection">
+            <!-- CHANGED TITLE: My Eco-Friendly Path -->
+            <div class="hero-title">My Eco-Friendly Path</div>
+            <!-- CHANGED SUBTITLE: General Eco-Friendly actions -->
+            <p class="hero-sub">15 weeks of small changes for a greener future 🍃</p>
+            <!-- ICONS: Leaves kept as requested -->
+            <div class="hero-deco">🍃 ✨ 🍃 ✨ 🍃</div>
+            <div class="scroll-cue">
+                <span></span>
+                scroll down
+            </div>
+        </section>
+
+        <!-- ═══════ WEEKS CONTAINER ═══════ -->
+        <div id="weeksContainer"></div>
+
+        <!-- ═══════ FOOTER ═══════ -->
+        <footer class="site-footer">
+            <div class="footer-deco">🍃 🍃 🍃</div>
+            <p class="footer-name">🍃 Ariannette S. Omawas — BSIT 2A 🍃</p>
+            <p class="footer-copy">© 2026 Ariannette S. Omawas. All Rights Reserved.</p>
+            <p class="footer-thanks">building a better future for everyone ✨</p>
+        </footer>
+    </main>
+
+    <!-- ═══════ IMAGE MODAL ═══════ -->
+    <div id="imgModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg">
+        <div id="caption" class="modal-caption"></div>
+    </div>
+
+<script>
+// ──────────────────────────────────────────
+//  WEEKS DATA (ECO-FRIENDLY THEME - NOT NATURE SPECIFIC)
+// ──────────────────────────────────────────
+const weeks = [
+    {
+        week: 1,
+        title: "Sewing a Pillowcase",
+        desc: "My first conservation effort was to turn an old class into something useful. This cloth belonged to my aunt, who gave it to my mother, but now that she's no longer using it, I thought it may do us a new pillowcase. Hence, I stitched it up and made it useful.",
+        photos: ["Week 1_ Feb 6/IMG_20260206_114204.jpg", "Week 1_ Feb 6/IMG_20260206_114210.jpg", "Week 1_ Feb 6/IMG_20260206_122248.jpg", "Week 1_ Feb 6/IMG_20260502_103237.jpg"]
+    },
+    {
+        week: 2,
+        title: "Reusing Plastics",
+        desc: "These plastics came from ordered parcels, and my mother has been preserving them for future purposes. They seem pretty durable and useful. Hence, I used them as a container of my papers.",
+        photos: ["Week 2_ Feb 13/IMG_20260405_094718.jpg", "Week 2_ Feb 13/IMG_20260405_094847.jpg"]
+    },
+    {
+        week: 3,
+        title: "Sewing Blanket",
+        desc: "My mother had some sack of flour kept hidden. I asked her if I could use them to make a new blanket since two of my sister's children arrived and they needed a blanket to keep them warm. I washed them first. Hence, I sew them a blanket.",
+        photos: ["Week 3_ Feb 20/IMG_20260425_073516.jpg", "Week 3_ Feb 20/IMG_20260425_073542.jpg"]
+    },
+    {
+        week: 4,
+        title: "Vegetable Food",
+        desc: "We have been eating too many processed foods lately. But, thankfully, my parents had planted 'talbos ng kamote' by the house. So, I told them, why don't we try cooking them more often instead of buying goods from the market? Hence, we ate a very healthy meal.",
+        photos: ["Week 4_ Feb 27/IMG_20260427_213305.jpg", "Week 4_ Feb 27/IMG_20260427_221913.jpg", "Week 4_ Feb 27/IMG_20260427_221940.jpg"]
+    },
+    {
+        week: 5,
+        title: "Mask Project",
+        desc: "Turning newspapers into a school project is also one of the best ways to reuse unused items. I used beads and thin fabrics to make my mask as pretty as possible; it's inspired by the Philippine flag since on these specific days I have been rewatching and reading Noli Me Tangere and El Filibusterismo; hence, I use the new items to make my school project.",
+        photos: ["Week 5_ March 4/Messenger_creation_2A0F4DC4-999D-42F2-8B2A-8D62EFB97C84.jpeg", "Week 5_ March 4/Messenger_creation_8C278C29-6CB1-4C90-B59F-8517FD1A5CC6.jpeg"]
+    },
+    {
+        week: 6,
+        title: "Walking",
+        desc: "Gas prices are slowly rising. But in order to save money, and to also exercise, and to help the environment, my class and I mentally decided to not use a tricycle to go to our groupmate's house. So, we walked and chatted until we got there. Hence, we save both money and the environment by walking towards our destination.",
+        photos: ["Week 6_ March 13/Messenger_creation_9A740AF0-C247-44C2-9C74-52E2C92F3B59.jpeg", "Week 6_ March 13/Messenger_creation_C15A2FEF-7160-4CDE-80D0-97E5D0ECD35D.jpeg"]
+    },
+    {
+        week: 7,
+        title: "Fun Run",
+        desc: "One of the sustainable development goals (SDGs) was gender equality. So, in order to celebrate, my friends and I joined the Fun Run of the FundLife organization. This happened at the newly built road in Barangay Combis, and it was a fun and fulfilling experience. Hence, to celebrate gender equality, we joined the fun run, promoting both equality and health. It's like killing two birds with one stone.",
+        photos: ["Week 7_ March 21/IMG_20260321_053923.jpg", "Week 7_ March 21/IMG_20260321_062304.jpg"]
+    },
+    {
+        week: 8,
+        title: "Walking My Friends Home",
+        desc: "The time when two of my friends and I were reunited and we hung out. Two of them lived in Compass. When ordered to again save money, we chose to walk home. Hence, we walked from the plaza to Combis.",
+        photos: ["Week 8_ Apr 4/IMG_20250629_172944.jpg", "Week 8_ Apr 4/IMG_20250629_173059.jpg"]
+    },
+    {
+        week: 9,
+        title: "Jollibee Tupperware",
+        desc: "This day was my mother's birthday, and our sister brought food from Jollibee. So, as a tradition in our family, we used their chopper as a container for various other foods. Like in the photo, it has dried fish inside. Hence, we reused a reusable item.",
+        photos: ["Week 9_ Apr 8/IMG_20260416_184733.jpg", "Week 9_ Apr 8/IMG_20260416_184744.jpg"]
+    },
+    {
+        week: 10,
+        title: "Reusing Old Jars",
+        desc: "We also have tons of unused jars around the house. So, instead of throwing them away, I thought I could use the one that I found as a salt container.",
+        photos: ["Week 10_ Apr 17/IMG_20260427_171650.jpg", "Week 10_ Apr 17/IMG_20260427_171659.jpg"]
+    },
+    {
+        week: 11,
+        title: "Fuel",
+        desc: "This week, since we didn't want to always use the stove and also in order to save gas due to the increase of their price, we decided to do the traditional way of cooking to cook our meals every now and then. It's always best to learn new ways to prepare meals.",
+        photos: ["Week 11_ Apr 23/IMG_20260502_103329.jpg", "Week 11_ Apr 23/IMG_20260502_103333.jpg"]
+    },
+    {
+        week: 12,
+        title: "The WACS Orientation",
+        desc: "This week I was assigned to attend the orientation for the Waste Analysis Characterization Study, which aims for a green campus and to reduce impact on our environment. So basically, they showed us how to segregate waste, and they also taught us the methods we can use to manage the waste of our campus environment. It was a fulfilling experience, and I realized numerous lessons about the importance of nurturing our environment.",
+        photos: ["Week 12_ Apr 29/IMG_20260429_142126.jpg", "Week 12_ Apr 29/IMG_20260429_163111.jpg"]
+    },
+    {
+        week: 13,
+        title: "Reusing Old Gift Boxes",
+        desc: "I found an old gift box in our wardrobe, so I decided to use it for a very specific purpose. I like to draw, and I also like keeping my things in an organized container, so I have placed all my drawings inside the box along with a few items I own. Hence, I used an old box as a container.",
+        photos: ["Week 13_ May 7/IMG_20260518_185013.jpg", "Week 13_ May 7/IMG_20260518_185026.jpg"]
+    },
+    {
+        week: 14,
+        title: "Reusing Cardboard Boxes",
+        desc: "Cardboard boxes are one of the items that tend to have the most beneficial potential. But this week, due to the intense heat of the climate and because our roof is made out of galvanized steel, the heat in our home becomes unbearable. So, my mother and I decided to use these cardboard boxes as temporary shields against the heat. Additionally, we can also use these cardboard boxes for many purposes since these items' versatility provides endless possibilities.",
+        photos: ["Week 14_ May 14/IMG_20260518_184727.jpg"]
+    },
+    {
+        week: 15,
+        title: "Reusing Water Bottles",
+        desc: "The heat was becoming uncomfortable this week, so I was always thirsty. Unfortunately, I do not have a tumbler.Reusing this water bottle helps a lot.",
+        photos: ["Week 15_ May 17/IMG_20260502_083802.jpg", "Week 15_ May 17/IMG_20260502_083945.jpg"]
+    }
+];
+
+// ──────────────────────────────────────────
+//  RENDER WEEK SECTIONS
+// ──────────────────────────────────────────
+const container = document.getElementById('weeksContainer');
+
+weeks.forEach((w, i) => {
+    const section = document.createElement('section');
+    const isLast = w.week === 15;
+    section.className = 'week-section' + (isLast ? ' last-week' : '');
+    section.id = `week-${w.week}`;
+    section.setAttribute('data-week', w.week);
+
+    const photoClass = isLast ? 'photo-grid cols-3' : 'photo-grid';
+
+    const decoratedTitle = w.title;
+
+    let photosHTML = w.photos.map(photo =>
+    `<img src="${photo}" alt="Week ${w.week} documentation" loading="lazy" onerror="this.onerror=null; this.src='https://picsum.photos/seed/${w.week}/200/300.jpg'; this.alt='Image not found in ${photo}';">`
+    ).join('');
+
+    let extrasHTML = '';
+    if (w.reflection) {
+        extrasHTML += `
+            <div class="reflection-box">
+                <div class="reflection-label">🍃 My Reflection</div>
+                <p class="reflection-text">${w.reflection}</p>
+            </div>`;
+    }
+    if (w.commitments) {
+        const items = w.commitments.map(c => `<li>${c}</li>`).join('');
+        extrasHTML += `
+            <div class="commitment-box">
+                <div class="commitment-label">✨ Habit Commitments</div>
+                <ul class="commitment-list">${items}</ul>
+            </div>`;
+    }
+
+    section.innerHTML = `
+        <div class="week-card">
+            <div class="week-badge">🍃 week ${w.week}</div>
+            <h2 class="week-title">${decoratedTitle}</h2>
+            <div class="${photoClass}">${photosHTML}</div>
+            <p class="week-desc">${w.desc}</p>
+            ${extrasHTML}
+        </div>
+    `;
+
+    container.appendChild(section);
+});
+
+// ──────────────────────────────────────────
+//  SIDE NAVIGATION DOTS
+// ──────────────────────────────────────────
+const nav = document.getElementById('weekNav');
+const allSections = [document.getElementById('heroSection'), ...document.querySelectorAll('.week-section')];
+
+allSections.forEach((sec, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'week-nav-dot';
+    dot.setAttribute('aria-label', i === 0 ? 'Hero' : `Week ${i}`);
+    dot.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+    nav.appendChild(dot);
+});
+
+const dots = nav.querySelectorAll('.week-nav-dot');
+
+// ──────────────────────────────────────────
+//  SCROLL EMPHASIS LOGIC
+// ──────────────────────────────────────────
+const weekSections = document.querySelectorAll('.week-section');
+
+function updateEmphasis() {
+    const vpCenter = window.innerHeight / 2;
+    let activeIdx = -1;
+    let minDist = Infinity;
+
+    allSections.forEach((sec, i) => {
+        const rect = sec.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const dist = Math.abs(center - vpCenter);
+        if (dist < minDist) {
+            minDist = dist;
+            activeIdx = i;
+        }
+    });
+
+    dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+
+    weekSections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const dist = Math.abs(center - vpCenter);
+        const threshold = window.innerHeight * 0.4;
+
+        sec.classList.remove('active', 'near');
+        if (dist < threshold * 0.5) {
+            sec.classList.add('active');
+        } else if (dist < threshold) {
+            sec.classList.add('near');
+        }
+    });
+}
+
+window.addEventListener('scroll', updateEmphasis, { passive: true });
+window.addEventListener('resize', updateEmphasis);
+updateEmphasis();
+
+// ──────────────────────────────────────────
+//  FLOATING PARTICLES (Green Colors)
+// ──────────────────────────────────────────
+const particleContainer = document.getElementById('particles');
+const particleColors = [
+    'rgba(6, 182, 212, 0.9)',   
+    'rgba(16, 185, 129, 0.9)',  
+    'rgba(5, 150, 105, 0.9)',   
+    'rgba(22, 163, 74, 0.9)',   
+    'rgba(20, 83, 45, 0.9)',   
+];
+
+function createParticle() {
+    const p = document.createElement('div');
+    p.className = 'particle';
+
+    const size = Math.random() * 6 + 3;
+    const left = Math.random() * 100;
+    const dur = Math.random() * 14 + 10;
+    const delay = Math.random() * 8;
+    const color = particleColors[Math.floor(Math.random() * particleColors.length)];
+    const drift = (Math.random() - 0.5) * 60;
+    const opacity = Math.random() * 0.3 + 0.5;
+
+    p.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${left}%;
+        bottom: -10px;
+        background: ${color};
+        box-shadow: 0 0 ${size * 2}px ${color};
+        animation-duration: ${dur}s;
+        animation-delay: ${delay}s;
+        --p-drift: ${drift}px;
+        --p-opacity: ${opacity};
+    `;
+
+    particleContainer.appendChild(p);
+}
+
+for (let i = 0; i < 30; i++) createParticle();
+
+// ──────────────────────────────────────────
+//  IMAGE MODAL LOGIC (LIGHTBOX)
+// ──────────────────────────────────────────
+const modal = document.getElementById("imgModal");
+const modalImg = document.getElementById("modalImg");
+const captionText = document.getElementById("caption");
+const closeModal = document.querySelector(".close-modal");
+
+document.querySelectorAll('.photo-grid img').forEach(img => {
+    img.addEventListener('click', function() {
+        modal.classList.add('show');
+        modalImg.src = this.src;
+        
+        captionText.innerHTML = this.alt.replace(" documentation", "");
+        document.body.style.overflow = "hidden"; 
+    });
+});
+
+function hideModal() {
+    modal.classList.remove('show');
+    document.body.style.overflow = "auto"; 
+}
+
+closeModal.addEventListener('click', hideModal);
+
+modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+        hideModal();
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape" && modal.classList.contains('show')) {
+        hideModal();
+    }
+});
+</script>
+</body>
+</html>
