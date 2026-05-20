@@ -6,7 +6,7 @@
     <title>My Sustainability Journey — 15 Weeks</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Poppins (Headings) & Inter (Body) - Simple & Clean -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -21,14 +21,12 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            /* Light Orange/Cream Background */
             background: #fff7ed; 
-            /* Dark Orange/Brown Text */
             color: #7c2d12; 
             overflow-x: hidden;
         }
 
-        /* ── ambient background blobs (Orange Theme) ── */
+        /* ── ambient background blobs ── */
         .bg-blob {
             position: fixed;
             border-radius: 50%;
@@ -38,19 +36,19 @@
         }
         .blob-1 {
             width: 500px; height: 500px;
-            background: rgba(255, 237, 213, 0.7); /* Orange 200 */
+            background: rgba(255, 237, 213, 0.7);
             top: -100px; left: -150px;
             animation: blobDrift1 18s ease-in-out infinite alternate;
         }
         .blob-2 {
             width: 400px; height: 400px;
-            background: rgba(253, 186, 116, 0.6); /* Orange 300 */
+            background: rgba(253, 186, 116, 0.6);
             bottom: -80px; right: -120px;
             animation: blobDrift2 22s ease-in-out infinite alternate;
         }
         .blob-3 {
             width: 300px; height: 300px;
-            background: rgba(251, 146, 60, 0.15); /* Orange 500 transparent */
+            background: rgba(251, 146, 60, 0.15);
             top: 40%; left: 50%;
             animation: blobDrift3 15s ease-in-out infinite alternate;
         }
@@ -82,7 +80,7 @@
             100% { transform: translateY(-105vh) translateX(var(--p-drift, -15px)) scale(0.4); opacity: 0; }
         }
 
-        /* ── hero (New Simple Orange Intro) ── */
+        /* ── hero ── */
         .hero {
             min-height: 100vh;
             scroll-snap-align: center;
@@ -99,7 +97,6 @@
             font-family: 'Poppins', sans-serif;
             font-size: clamp(3rem, 9vw, 5rem);
             font-weight: 800;
-            /* Orange Gradient */
             background: linear-gradient(135deg, #ea580c, #c2410c, #9a3412);
             background-size: 300% 300%;
             -webkit-background-clip: text;
@@ -200,7 +197,6 @@
         }
 
         .week-card {
-            /* White Card with Orange Tint */
             background: rgba(255, 255, 255, 0.85); 
             border: 1px solid rgba(251, 146, 60, 0.25); 
             border-radius: 1.5rem;
@@ -416,7 +412,7 @@
             font-weight: 600;
         }
 
-        /* ── LIGHTBOX / MODAL STYLES (Orange Theme) ── */
+        /* ── LIGHTBOX / MODAL STYLES ── */
         .modal {
             display: none;
             position: fixed;
@@ -425,7 +421,6 @@
             top: 0;
             width: 100%;
             height: 100%;
-            /* Dark Orange Overlay */
             background-color: rgba(69, 26, 3, 0.92); 
             backdrop-filter: blur(8px);
             align-items: center;
@@ -537,7 +532,7 @@
 
 <script>
 // ──────────────────────────────────────────
-//  WEEKS DATA (COMPLETE 15 WEEKS)
+//  WEEKS DATA
 // ──────────────────────────────────────────
 const weeks = [
     {
@@ -616,7 +611,7 @@ const weeks = [
         week: 13,
         title: "Community garden activity ",
         desc: "I actively took part in a community gardening activity in Brgy. Malaguining. During the activity, we planted vegetables and helped maintain a shared garden for the community. It was a meaningful experience that promoted teamwork, patience, and responsibility. Through this activity, I learned the importance of growing food, caring for plants, and working together to support a sustainable and healthy community.",
-        photos: ["Azores/Week 13/1.jpeg",]
+        photos: ["Azores/Week 13/1.jpeg"]
     },
     {
         week: 14,
@@ -633,7 +628,7 @@ const weeks = [
 ];
 
 // ──────────────────────────────────────────
-//  RENDER WEEK SECTIONS
+//  RENDER WEEK SECTIONS (FIXED ERROR HANDLING)
 // ──────────────────────────────────────────
 const container = document.getElementById('weeksContainer');
 
@@ -646,8 +641,14 @@ weeks.forEach((w, i) => {
 
     const photoClass = isLast ? 'photo-grid cols-3' : 'photo-grid';
 
+    // FIX: Pre-calculate the fallback URL to avoid template literal errors in HTML
+    const fallbackUrl = `https://picsum.photos/seed/orange${w.week}/200/300.jpg`;
+
     let photosHTML = w.photos.map(photo =>
-    `<img src="${photo}" alt="Week ${w.week} documentation" loading="lazy" onerror="this.onerror=null; this.src='https://picsum.photos/seed/orange${w.week}/200/300.jpg'; this.alt='Image not found in ${photo}';">`
+        `<img src="${photo}" 
+             alt="Week ${w.week} documentation" 
+             loading="lazy" 
+             onerror="this.onerror=null; this.src='${fallbackUrl}'; this.alt='Image not found';">`
     ).join('');
 
     let extrasHTML = '';
@@ -741,26 +742,23 @@ updateEmphasis();
 //  FLOATING PARTICLES (Orange Theme)
 // ──────────────────────────────────────────
 const particleContainer = document.getElementById('particles');
-// Warm Orange/Amber Colors
 const particleColors = [
-    'rgba(124, 45, 18, 0.9)',   /* Orange 900 - Dark Brown/Orange */
-    'rgba(194, 65, 12, 0.8)',   /* Orange 600 - Strong Orange */
-    'rgba(234, 88, 12, 0.8)',   /* Orange 500 - Bright Orange */
-    'rgba(249, 115, 22, 0.8)',  /* Orange 500 - Standard */
+    'rgba(124, 45, 18, 0.9)',   
+    'rgba(194, 65, 12, 0.8)',   
+    'rgba(234, 88, 12, 0.8)',   
+    'rgba(249, 115, 22, 0.8)',  
 ];
 
 function createParticle() {
     const p = document.createElement('div');
     p.className = 'particle';
 
-    // Size 3px to 9px
     const size = Math.random() * 6 + 3;
     const left = Math.random() * 100;
     const dur = Math.random() * 14 + 10;
     const delay = Math.random() * 8;
     const color = particleColors[Math.floor(Math.random() * particleColors.length)];
     const drift = (Math.random() - 0.5) * 60;
-    // Opacity 0.5 to 0.8
     const opacity = Math.random() * 0.3 + 0.5;
 
     p.style.cssText = `
@@ -789,12 +787,10 @@ const modalImg = document.getElementById("modalImg");
 const captionText = document.getElementById("caption");
 const closeModal = document.querySelector(".close-modal");
 
-// Attach click event to all images in the grid
 document.querySelectorAll('.photo-grid img').forEach(img => {
     img.addEventListener('click', function() {
         modal.classList.add('show');
         modalImg.src = this.src;
-        
         captionText.innerHTML = this.alt.replace(" documentation", "");
         document.body.style.overflow = "hidden"; 
     });
@@ -806,17 +802,11 @@ function hideModal() {
 }
 
 closeModal.addEventListener('click', hideModal);
-
 modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-        hideModal();
-    }
+    if (e.target === modal) hideModal();
 });
-
 document.addEventListener('keydown', function(e) {
-    if (e.key === "Escape" && modal.classList.contains('show')) {
-        hideModal();
-    }
+    if (e.key === "Escape" && modal.classList.contains('show')) hideModal();
 });
 </script>
 </body>
