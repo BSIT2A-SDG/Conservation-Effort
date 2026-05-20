@@ -628,7 +628,7 @@ const weeks = [
 ];
 
 // ──────────────────────────────────────────
-//  RENDER WEEK SECTIONS (FIXED ERROR HANDLING)
+//  RENDER WEEK SECTIONS (WITH DEBUGGING)
 // ──────────────────────────────────────────
 const container = document.getElementById('weeksContainer');
 
@@ -641,15 +641,18 @@ weeks.forEach((w, i) => {
 
     const photoClass = isLast ? 'photo-grid cols-3' : 'photo-grid';
 
-    // FIX: Pre-calculate the fallback URL to avoid template literal errors in HTML
-    const fallbackUrl = `https://picsum.photos/seed/orange${w.week}/200/300.jpg`;
+    // DEBUGGING: Visual Placeholder Image if file is missing
+    const debugPlaceholder = `https://placehold.co/600x400/ea580c/fff?text=IMAGE+NOT+FOUND`;
 
-    let photosHTML = w.photos.map(photo =>
-        `<img src="${photo}" 
+    let photosHTML = w.photos.map(photo => {
+        // Log the error to console (F12) so you can see the exact path being looked for
+        console.log(`Looking for image: ${photo}`);
+        
+        return `<img src="${photo}" 
              alt="Week ${w.week} documentation" 
              loading="lazy" 
-             onerror="this.onerror=null; this.src='${fallbackUrl}'; this.alt='Image not found';">`
-    ).join('');
+             onerror="console.error('FAILED TO LOAD: '${photo}'); this.onerror=null; this.src='${debugPlaceholder}';">`;
+    }).join('');
 
     let extrasHTML = '';
     if (w.reflection) {
