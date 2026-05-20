@@ -81,36 +81,37 @@
             100% { transform: translate(-80px, -100px) scale(1.2); }
         }
 
-        /* ── floating particles (FIXED VISIBILITY) ── */
+        /* ── VISIBLE FLOATING PARTICLES ── */
         #particles { 
             position: fixed; 
             inset: 0; 
             pointer-events: none; 
-            z-index: 999; /* MOVED TO FRONT SO THEY ARE VISIBLE */
+            z-index: 2; /* Behind content, but visible against the dark bg */
         }
         .particle {
             position: absolute;
             border-radius: 50%;
-            background: #fff; /* Pure white for visibility */
-            box-shadow: 0 0 10px 2px rgba(192, 132, 252, 0.8); /* Strong purple glow */
+            background: #fff; 
+            /* Restored glow for visibility, but kept softer than original */
+            box-shadow: 0 0 8px 2px rgba(192, 132, 252, 0.6); 
             animation: floatUp linear infinite;
             mix-blend-mode: screen; 
             will-change: transform, opacity;
         }
         @keyframes floatUp {
             0% { 
-                transform: translateY(0) translateX(0) scale(0.5); 
+                transform: translateY(0) translateX(0) scale(0.8); 
                 opacity: 0; 
             }
             10% { 
-                opacity: var(--p-opacity, 0.8); 
+                opacity: var(--p-opacity, 0.7); /* Brighter entry */
                 transform: translateY(-10vh) translateX(10px) scale(1); 
             }
-            80% { 
-                opacity: calc(var(--p-opacity, 0.8) * 0.6); 
+            90% { 
+                opacity: calc(var(--p-opacity, 0.7) * 0.6); 
             }
             100% { 
-                transform: translateY(-110vh) translateX(var(--p-drift, -20px)) scale(0.5); 
+                transform: translateY(-110vh) translateX(var(--p-drift, -20px)) scale(0.8); 
                 opacity: 0; 
             }
         }
@@ -236,14 +237,14 @@
         }
 
         .week-card {
-            background: rgba(20, 10, 40, 0.6); /* Darker bg for better contrast */
+            background: rgba(20, 10, 40, 0.65); /* Slightly more opaque to ensure text readability over particles */
             border: 1px solid rgba(168, 85, 247, 0.2);
             border-radius: 1.5rem;
             padding: 1.5rem;
             max-width: 640px;
             width: 100%;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px); /* Increased blur to soften particles behind text */
+            -webkit-backdrop-filter: blur(25px);
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
             overflow: hidden;
@@ -253,7 +254,7 @@
         /* Enhanced Active State for "Pop" */
         .week-section.active .week-card {
             border-color: rgba(216, 180, 254, 0.5);
-            background: rgba(30, 15, 60, 0.7);
+            background: rgba(30, 15, 60, 0.75);
             /* Complex Glow */
             box-shadow: 
                 0 0 0 1px rgba(168, 85, 247, 0.1),
@@ -327,6 +328,7 @@
             background-color: rgba(255,255,255,0.05);
             cursor: pointer;
             border: 1px solid rgba(255,255,255,0.05);
+            z-index: 2; /* Ensure images are above particles */
         }
         .week-section.active .photo-grid img {
             filter: brightness(1) grayscale(0) saturate(1);
@@ -549,7 +551,6 @@
 </head>
 <body>
 
-<<<<<<< HEAD
     <!-- Interactive Mouse Spotlight -->
     <div id="cursor-light"></div>
     
@@ -560,7 +561,7 @@
     <div class="bg-blob blob-1"></div>
     <div class="bg-blob blob-2"></div>
 
-    <!-- floating particles (Now on top!) -->
+    <!-- floating particles -->
     <div id="particles"></div>
 
     <!-- side nav dots -->
@@ -882,7 +883,7 @@ window.addEventListener('resize', updateEmphasis);
 updateEmphasis();
 
 // ──────────────────────────────────────────
-//  FLOATING PARTICLES (FIXED & ENHANCED)
+//  FLOATING PARTICLES (MORE VISIBLE)
 // ──────────────────────────────────────────
 const particleContainer = document.getElementById('particles');
 
@@ -890,13 +891,14 @@ function createParticle() {
     const p = document.createElement('div');
     p.className = 'particle';
 
-    // Make particles bigger and more visible
-    const size = Math.random() * 6 + 4; // Size between 4px and 10px
+    // Balanced size: 3px to 6px
+    const size = Math.random() * 3 + 3; 
     const left = Math.random() * 100;
     const dur = Math.random() * 10 + 8; // Duration between 8s and 18s
     const delay = Math.random() * 5;
-    const drift = (Math.random() - 0.5) * 100; // More horizontal drift
-    const opacity = Math.random() * 0.4 + 0.4; // Opacity between 0.4 and 0.8
+    const drift = (Math.random() - 0.5) * 100; 
+    // INCREASED OPACITY: 0.4 to 0.8 for better visibility
+    const opacity = Math.random() * 0.4 + 0.4; 
 
     p.style.cssText = `
         width: ${size}px;
@@ -912,8 +914,8 @@ function createParticle() {
     particleContainer.appendChild(p);
 }
 
-// Create 60 particles for a nice dense effect
-for (let i = 0; i < 60; i++) createParticle();
+// 45 particles for a balanced look
+for (let i = 0; i < 45; i++) createParticle();
 
 
 // ──────────────────────────────────────────
