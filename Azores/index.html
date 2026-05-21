@@ -7,7 +7,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- NEW FONTS: Poppins (Headings) & Open Sans (Body) -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -15,12 +15,15 @@
     <style>
         body { font-family: 'Open Sans', sans-serif; }
         h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body class="bg-orange-50 text-stone-900">
 
-    <!-- ─────── HERO SECTION (YOUR NEW INTRO) ─────── -->
-    <header class="relative bg-white border-b border-orange-100 py-20 md:py-28 px-4 text-center shadow-sm">
+    <!-- ─────── HERO SECTION ─────── -->
+    <header class="relative bg-white border-b border-orange-100 py-20 md:py-28 px-4 text-center shadow-sm overflow-hidden">
         <!-- Subtle Background decoration -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
             <div class="absolute -top-10 -left-10 w-40 h-40 bg-orange-200 rounded-full blur-2xl"></div>
@@ -38,7 +41,7 @@
             <p class="text-lg md:text-xl text-stone-600 mb-8 leading-relaxed max-w-2xl mx-auto">
                 From coastal clean-ups to community gardens, documenting my 15-week journey of small acts with a big impact.
             </p>
-            <a href="#journal-container" class="inline-flex items-center gap-2 px-6 py-3 bg-orange-600 text-white font-semibold rounded-full hover:bg-orange-700 transition-colors shadow-md">
+            <a href="#journal-container" class="inline-flex items-center gap-2 px-6 py-3 bg-orange-600 text-white font-semibold rounded-full hover:bg-orange-700 transition-colors shadow-md transform hover:-translate-y-1 duration-200">
                 Start Reading
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
             </a>
@@ -46,34 +49,41 @@
     </header>
 
     <!-- ─────── MAIN CONTENT ─────── -->
-    <main id="journal-container" class="max-w-4xl mx-auto p-6 md:p-12 space-y-12">
+    <main id="journal-container" class="max-w-5xl mx-auto p-6 md:p-12 space-y-16">
         <!-- Content generates here via JavaScript -->
     </main>
 
     <!-- ─────── FOOTER ─────── -->
-    <footer class="bg-orange-950 text-orange-100 py-10 text-center mt-20">
-        <p class="font-serif italic text-xl text-orange-200 mb-2">"The greatest threat to our planet is the belief that someone else will save it."</p>
-        <p class="font-bold text-orange-300">🍃 Jesebel E. Azores — BSIT 2A 🍃</p>
-        <p class="text-sm text-orange-400 mt-4 opacity-70">&copy; 2026 Jesebel E. Azores. All Rights Reserved.</p>
+    <footer class="bg-orange-950 text-orange-100 py-12 text-center mt-20 border-t-4 border-orange-600">
+        <div class="max-w-2xl mx-auto px-4">
+            <p class="font-serif italic text-xl text-orange-200 mb-4">"The greatest threat to our planet is the belief that someone else will save it."</p>
+            <p class="font-bold text-orange-300 text-lg">🍃 Jesebel E. Azores — BSIT 2A 🍃</p>
+            <div class="mt-6 w-16 h-1 bg-orange-600 mx-auto rounded-full"></div>
+            <p class="text-sm text-orange-400 mt-6 opacity-70">&copy; 2026 Jesebel E. Azores. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <!-- Lightbox Modal -->
-    <div id="imgModal" class="fixed inset-0 bg-stone-900/90 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <button id="closeModal" class="absolute top-5 right-5 text-white text-4xl hover:text-orange-400">&times;</button>
-        <img id="modalImg" class="max-w-4xl w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border-4 border-orange-500">
-        <p id="modalCaption" class="text-orange-200 mt-4 font-semibold"></p>
+    <div id="imgModal" class="fixed inset-0 bg-stone-900/95 z-50 hidden flex flex-col items-center justify-center p-4 backdrop-blur-md transition-opacity duration-300">
+        <button id="closeModal" class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="relative max-w-5xl w-full max-h-[85vh] flex items-center justify-center">
+            <img id="modalImg" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border-4 border-orange-500/30" alt="Full view">
+        </div>
+        <p id="modalCaption" class="text-orange-200 mt-6 font-semibold text-center text-lg"></p>
     </div>
 
     <script>
         // ──────────────────────────────────────
-        //  YOUR DATA (ARIANNETTE S. OMAWAS)
+        //  DATA (JESABEL E. AZORES)
         // ──────────────────────────────────────
         const weeks = [
-          {
+            {
                 week: 1,
                 title: "Community clean-up activity at the Barangay Hall of Brgy. Malaguining, Talalora, Samar",
                 desc: "I participated in a community clean-up activity at the Barangay Hall of Brgy. Malaguining. Throughout the week, we worked together as a community to sweep the surroundings, collect waste, and maintain the cleanliness of the area. The experience was both productive and meaningful, as it showed the value of teamwork and shared responsibility. Being part of this activity made me feel fulfilled, knowing that I contributed to creating a cleaner and healthier environment for everyone.",
-                // CHANGE THIS TO YOUR FILENAME (e.g., "week1.jpg")
+                // LOCAL FILE PATH
                 image: ["Azores/Week 1/Messenger_creation_9C85F658-C16F-4F82-9907-F1796490B704.jpeg"]
             },
             {
@@ -163,81 +173,86 @@
         ];
 
         // ──────────────────────────────────────
-        //  GENERATE HTML (ROBUST METHOD)
+        //  RENDER LOGIC (FIXED)
         // ──────────────────────────────────────
         const container = document.getElementById('journal-container');
 
-        weeks.forEach((week) => {
-            // 1. Create Card Container
-            const card = document.createElement('div');
-            card.className = "bg-white rounded-2xl shadow-sm border border-orange-100 overflow-hidden hover:shadow-lg hover:shadow-orange-200/50 transition-all duration-300";
+        if (container) {
+            weeks.forEach((week) => {
+                // 1. Create Card Container
+                const card = document.createElement('article');
+                card.className = "bg-white rounded-2xl shadow-sm border border-orange-100 overflow-hidden hover:shadow-xl hover:shadow-orange-200/60 transition-all duration-300 transform hover:-translate-y-1";
 
-            // 2. Create Flex Wrapper (Row layout)
-            const flexWrapper = document.createElement('div');
-            flexWrapper.className = "flex flex-col md:flex-row";
-            card.appendChild(flexWrapper);
+                // 2. Create Flex Wrapper (Row layout)
+                const flexWrapper = document.createElement('div');
+                flexWrapper.className = "flex flex-col md:flex-row h-full";
+                card.appendChild(flexWrapper);
 
-            // 3. Create Image Container
-            const imgContainer = document.createElement('div');
-            imgContainer.className = "md:w-2/5 h-64 md:h-auto relative bg-orange-50";
-            flexWrapper.appendChild(imgContainer);
+                // 3. Create Image Container
+                const imgContainer = document.createElement('div');
+                imgContainer.className = "md:w-2/5 h-64 md:h-auto relative bg-orange-50 overflow-hidden group";
+                flexWrapper.appendChild(imgContainer);
 
-            // 4. Create Image Element
-            // If you have multiple photos, we take the first one for the card view
-            const imgUrl = week.photos[0]; 
-            
-            const img = document.createElement('img');
-            img.alt = week.title;
-            img.className = "absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-pointer";
-            img.src = imgUrl;
-            
-            // Click to open modal
-            img.onclick = () => openModal(imgUrl);
+                // 4. Create Image Element
+                // FIX: Access 'week.image' not 'week.photos'
+                // Also added a fallback to the first item in the array
+                const imgUrl = week.image && week.image.length > 0 ? week.image[0] : '';
+                
+                const img = document.createElement('img');
+                img.alt = week.title;
+                img.className = "absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-110 cursor-pointer";
+                // Use a seed based on the week number for the fallback image
+                const fallbackUrl = `https://picsum.photos/seed/week${week.week}/600/800`;
+                
+                img.src = imgUrl || fallbackUrl;
+                
+                // Click to open modal
+                img.onclick = () => openModal(img.src || fallbackUrl, week.title);
 
-            // Error handling: Fallback to placeholder if local file fails
-            img.onerror = function() {
-                this.style.display = 'flex';
-                this.style.alignItems = 'center';
-                this.style.justifyContent = 'center';
-                this.style.backgroundColor = '#FED7AA';
-                this.style.color = '#9A3412';
-                this.style.fontWeight = 'bold';
-                this.innerText = "Image Not Found";
-            };
+                // Fallback logic: If local file fails (because it's not on the web server), load a placeholder
+                img.onerror = function() {
+                    // Prevent infinite loop if fallback also fails (unlikely with picsum)
+                    if (this.src !== fallbackUrl) {
+                        this.src = fallbackUrl;
+                    }
+                };
 
-            imgContainer.appendChild(img);
+                imgContainer.appendChild(img);
 
-            // Add Week Badge
-            const badge = document.createElement('div');
-            badge.className = "absolute top-4 left-4 bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-sm z-10";
-            badge.innerText = `Week ${week.week}`;
-            imgContainer.appendChild(badge);
+                // Add Week Badge
+                const badge = document.createElement('div');
+                badge.className = "absolute top-4 left-4 bg-orange-600/90 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide shadow-sm z-10";
+                badge.innerText = `Week ${week.week}`;
+                imgContainer.appendChild(badge);
 
-            // 5. Create Text Section
-            const textContainer = document.createElement('div');
-            textContainer.className = "p-8 md:p-10 md:w-3/5 flex flex-col justify-center";
-            flexWrapper.appendChild(textContainer);
+                // 5. Create Text Section
+                const textContainer = document.createElement('div');
+                textContainer.className = "p-8 md:p-10 md:w-3/5 flex flex-col justify-center";
+                flexWrapper.appendChild(textContainer);
 
-            // 6. Title
-            const h2 = document.createElement('h2');
-            h2.className = "text-2xl md:text-3xl font-bold text-orange-900 mb-4 leading-tight";
-            h2.innerText = week.title;
-            textContainer.appendChild(h2);
+                // 6. Title
+                const h2 = document.createElement('h2');
+                h2.className = "text-2xl md:text-3xl font-bold text-orange-900 mb-4 leading-tight";
+                h2.innerText = week.title;
+                textContainer.appendChild(h2);
 
-            // 7. Divider
-            const line = document.createElement('div');
-            line.className = "h-1 w-16 bg-orange-200 mb-5 rounded-full";
-            textContainer.appendChild(line);
+                // 7. Divider
+                const line = document.createElement('div');
+                line.className = "h-1 w-20 bg-orange-200 mb-6 rounded-full";
+                textContainer.appendChild(line);
 
-            // 8. Description
-            const p = document.createElement('p');
-            p.className = "text-stone-600 leading-relaxed text-lg";
-            p.innerText = week.desc;
-            textContainer.appendChild(p);
+                // 8. Description
+                const p = document.createElement('p');
+                p.className = "text-stone-600 leading-relaxed text-lg text-justify";
+                p.innerText = week.desc;
+                textContainer.appendChild(p);
 
-            // 9. Append to main container
-            container.appendChild(card);
-        });
+                // 9. Append to main container
+                container.appendChild(card);
+            });
+        } else {
+            console.error("Container element #journal-container not found.");
+        }
 
         // ──────────────────────────────────────
         //  LIGHTBOX LOGIC
@@ -247,22 +262,32 @@
         const caption = document.getElementById('modalCaption');
         const closeBtn = document.getElementById('closeModal');
 
-        function openModal(src) {
+        function openModal(src, title) {
             modal.classList.remove('hidden');
+            // Small timeout to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+            
             modalImg.src = src;
-            caption.innerText = src.split('/').pop(); // Extract filename
-            document.body.style.overflow = 'hidden';
+            caption.innerText = title || "Activity Photo";
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
 
         function closeModal() {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Match transition duration
+            document.body.style.overflow = 'auto'; // Restore scrolling
         }
 
         closeBtn.addEventListener('click', closeModal);
+        
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });
+        
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
