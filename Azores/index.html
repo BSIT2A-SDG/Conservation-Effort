@@ -15,16 +15,18 @@
     <style>
         body { font-family: 'Open Sans', sans-serif; }
         h1, h2, h3 { font-family: 'Poppins', sans-serif; }
-        
-        /* Smooth scrolling */
         html { scroll-behavior: smooth; }
+        
+        /* Smooth fade in for modal */
+        #imgModal { transition: opacity 0.3s ease-in-out; opacity: 0; pointer-events: none; }
+        #imgModal.active { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body class="bg-orange-50 text-stone-900">
 
     <!-- ─────── HERO SECTION ─────── -->
     <header class="relative bg-white border-b border-orange-100 py-20 md:py-28 px-4 text-center shadow-sm overflow-hidden">
-        <!-- Subtle Background decoration -->
+        <!-- Background decoration -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
             <div class="absolute -top-10 -left-10 w-40 h-40 bg-orange-200 rounded-full blur-2xl"></div>
             <div class="absolute top-20 right-10 w-32 h-32 bg-orange-100 rounded-full blur-xl"></div>
@@ -50,7 +52,7 @@
 
     <!-- ─────── MAIN CONTENT ─────── -->
     <main id="journal-container" class="max-w-5xl mx-auto p-6 md:p-12 space-y-16">
-        <!-- Content generates here via JavaScript -->
+        <!-- Content generates automatically via JavaScript -->
     </main>
 
     <!-- ─────── FOOTER ─────── -->
@@ -64,7 +66,7 @@
     </footer>
 
     <!-- Lightbox Modal -->
-    <div id="imgModal" class="fixed inset-0 bg-stone-900/95 z-50 hidden flex flex-col items-center justify-center p-4 backdrop-blur-md transition-opacity duration-300">
+    <div id="imgModal" class="fixed inset-0 bg-stone-900/95 z-50 flex flex-col items-center justify-center p-4 backdrop-blur-md">
         <button id="closeModal" class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
@@ -76,182 +78,167 @@
 
     <script>
         // ──────────────────────────────────────
-        //  DATA (JESABEL E. AZORES)
+        //  DATA (Simplified for ease of use)
         // ──────────────────────────────────────
         const weeks = [
             {
                 week: 1,
                 title: "Community clean-up activity at the Barangay Hall of Brgy. Malaguining, Talalora, Samar",
                 desc: "I participated in a community clean-up activity at the Barangay Hall of Brgy. Malaguining. Throughout the week, we worked together as a community to sweep the surroundings, collect waste, and maintain the cleanliness of the area. The experience was both productive and meaningful, as it showed the value of teamwork and shared responsibility. Being part of this activity made me feel fulfilled, knowing that I contributed to creating a cleaner and healthier environment for everyone.",
-                // LOCAL FILE PATH
-                image: ["Azores/Week 1/Messenger_creation_9C85F658-C16F-4F82-9907-F1796490B704.jpeg"]
+                image: "Azores/week1.jpeg"
             },
             {
                 week: 2,
                 title: "Campus sanitation activity at Malaguining Elementary School",
                 desc: "I participated in a campus sanitation activity at Malaguining Elementary School. During this activity, we worked together to clean the school grounds, pick up litter, and ensure the surroundings were neat and safe for learners. It was a meaningful experience that highlighted the importance of cleanliness, discipline, and cooperation. Being involved made me feel responsible and proud to contribute to a healthier school environment.",
-                image: ["Azores/Week 2/Messenger_creation_F7159820-7732-4A6B-AB3B-5FC5CDE0D2C2.jpeg"]
+                image: "Azores/week2.jpeg"
             },
             {
                 week: 3,
                 title: "River maintenance and sanitation activity in Brgy. Malaguining, Talalora, Samar",
                 desc: "I took part in a riverbank clean-up activity in Brgy. Malaguining. During the activity, we cleaned the surroundings of the small river by collecting garbage, removing debris, and helping to improve the natural environment. It was a meaningful experience that taught me the importance of keeping waterways clean to prevent pollution and flooding. Working together with others made the activity easier and more effective, and it gave me a sense of responsibility and care for our community’s environment.",
-                image: ["Azores/Week 3/Messenger_creation_F440C079-E61D-4738-8051-3AEE821DB4F6.jpeg"]
+                image: "Azores/week3.jpeg"
             },
             {
                 week: 4,
                 title: "Street sweeping activity in Brgy. Malaguining, Talalora Samar",
                 desc: "I actively joined a street sweeping activity in Brgy. Malaguining. During the activity, we worked together to clean the roads by sweeping away dirt and collecting litter along the streets. It was a meaningful experience that helped maintain cleanliness and improve the surroundings of the community. Through this activity, I learned the importance of cooperation and taking responsibility in keeping our environment clean and safe for everyone.",
-                image: ["Azores/Week 4/received_877853638658137.jpeg"]
+                image: "Azores/week4.jpeg"
             },
             {
                 week: 5,
                 title: "Cleaning and unclogging drainage canals",
                 desc: "I actively joined a cleaning and unclogging drainage canals activity in Brgy. Malaguining. During the activity, we worked together to remove trash, mud, and other debris that were blocking the drainage system. It was a meaningful experience that helped improve water flow and prevent possible flooding in the community. Through this activity, I learned the importance of proper waste disposal, teamwork, and maintaining a clean and safe environment for everyone.",
-                image: ["Azores/Week 5/received_1479845343925141.jpeg", "Azores/Week 5/received_1521715166235553.jpeg"]
+                image: ["Azores/week5_1.jpg", "Azores/week5_2.jpeg"]
             },
             {
                 week: 6,
                 title: "Coastal sanitation activity",
                 desc: "I actively joined a coastal clean-up activity in Brgy. Malaguining. During the activity, we cleaned the shoreline by collecting plastic waste, debris, and other rubbish along the seaside. It was a meaningful experience that helped protect the marine environment and keep the coast clean. Through this activity, I learned the importance of environmental care, teamwork, and proper waste management in preserving our natural resources.",
-                image: ["Azores/Week 6/received_1675088880403258.jpeg"]
+                image: "Azores/week6.jpg"
             },
             {
                 week: 7,
                 title: "Constructing a waste container",
                 desc: "I took part in a waste bin making activity in Malaguining Elementary School. During the activity, we used available materials to create a functional trash bin that can be used in the school and community. It was a meaningful experience that taught me creativity, teamwork, and the importance of proper waste management. Through this activity, I learned how small efforts can help promote cleanliness and environmental care.",
-                image: ["Azores/Week 7/Messenger_creation_6882B4A7-C48A-400C-843E-EEE8E90F66CC.jpeg"]
+                image: "Azores/week7.jpg"
             },
             {
                 week: 8,
                 title: "DIY waste bin project for the community",
                 desc: "I actively joined a DIY waste bin project for the community in Brgy. Malaguining. During the activity, we created and assembled waste bins using available and recycled materials to support proper waste disposal in the area. It was a meaningful experience that promoted creativity, teamwork, and environmental responsibility. Through this project, I learned the importance of managing waste properly and contributing simple solutions for a cleaner and more organized community.",
-                image: ["Azores/Week 8/IMG_20260521_142815.jpg"]
+                image: "Azores/week8.jpg"
             },
             {
                 week: 9,
                 title: "Garbage segregation activity",
                 desc: "I actively joined a waste segregation activity in Brgy. Malaguining. During the activity, we sorted different types of garbage such as biodegradable and non-biodegradable waste to promote proper waste management in the community. It was a meaningful experience that taught me discipline, responsibility, and the importance of keeping our surroundings clean. Through this activity, I learned how proper waste segregation helps protect the environment and improve community health.",
-                image: ["Azores/Week 9/Messenger_creation_A3C6F956-8714-471C-BD2B-848AB01E7D42.jpeg"]
+                image: "Azores/week9.jpg"
             },
             {
                 week: 10,
                 title: "Tree planting activity",
                 desc: "I took part in a tree planting activity in Brgy. Malaguining. During the activity, we planted young trees in designated areas to help improve the environment and support reforestation efforts. It was a meaningful experience that promoted teamwork, responsibility, and care for nature. Through this activity, I learned the importance of trees in providing clean air, preventing soil erosion, and protecting the environment for future generations.",
-                image: ["Azores/Week 10/IMG_20260521_141831.jpg"]
+                image: "Azores/week10.jpg"
             },
             {
                 week: 11,
                 title: "Giving away pre-loved clothes",
                 desc: "I gathered all my used clothes and took part in a clothes donation activity in Brgy. Malaguining. During the activity, I shared used clothing with families in need within the community. It was a meaningful experience that promoted kindness, generosity, and compassion. Through this activity, I learned the value of helping others and how simple acts of sharing can greatly impact the lives of those in need.",
-                image: ["Azores/Week 11/00b236bd-7177-4ff2-8c8c-813b84266f72.jpg"]
+                image: "Azores/week11.jpg"
             },
             {
                 week: 12,
                 title: "Feeding Program in school",
                 desc: "I actively took part in a school feeding activity at Malaguining Elementary School. During the program, we helped prepare and distribute nutritious meals to learners to support their health and daily energy needs. It was a meaningful experience that promoted cooperation, care, and service within the school community. Through this activity, I learned the importance of proper nutrition in helping students stay healthy, focused, and ready to learn.",
-                image: ["Azores/Week 12/Messenger_creation_46906D76-3321-4607-B723-49FBF256B093.jpeg"]
+                image: "Azores/week12.jpg"
             },
             {
                 week: 13,
                 title: "Community garden activity",
                 desc: "I actively took part in a community gardening activity in Brgy. Malaguining. During the activity, we planted vegetables and helped maintain a shared garden for the community. It was a meaningful experience that promoted teamwork, patience, and responsibility. Through this activity, I learned the importance of growing food, caring for plants, and working together to support a sustainable and healthy community.",
-                image: ["Azores/Week 13/received_1461315095721265.jpeg"]
+                image: "Azores/week13.jpg"
             },
             {
                 week: 14,
                 title: "Clean-up drive at the Barangay Gymnasium",
                 desc: "I took part in a clean-up drive at the Barangay Gymnasium of Brgy. Malaguining. During the activity, we cleaned the surroundings by sweeping floors, collecting trash, and organizing the area to make it neat and presentable. It was a meaningful experience that promoted teamwork, discipline, and responsibility. Through this activity, I learned the importance of maintaining cleanliness in public places to ensure a safe and pleasant environment for everyone.",
-                image: ["Azores/Week 14/received_722630227579387.jpeg"]
+                image: "Azores/week14.jpg"
             },
             {
                 week: 15,
                 title: "Relief goods packing and distribution",
                 desc: "I participated in a relief goods packing and distribution activity in Brgy. Malaguining. During the activity, we helped pack essential items and distribute them to families in need within the community. It was a meaningful experience that promoted compassion, teamwork, and service. Through this activity, I learned the importance of helping others during difficult times and the value of being ready to support those in need.",
-                image: ["Azores/15.jpeg"]
+                image: "Azores/week15.jpeg"
             }
         ];
 
         // ──────────────────────────────────────
-        //  RENDER LOGIC (FIXED)
+        //  RENDER LOGIC
         // ──────────────────────────────────────
         const container = document.getElementById('journal-container');
 
         if (container) {
             weeks.forEach((week) => {
-                // 1. Create Card Container
                 const card = document.createElement('article');
                 card.className = "bg-white rounded-2xl shadow-sm border border-orange-100 overflow-hidden hover:shadow-xl hover:shadow-orange-200/60 transition-all duration-300 transform hover:-translate-y-1";
 
-                // 2. Create Flex Wrapper (Row layout)
                 const flexWrapper = document.createElement('div');
                 flexWrapper.className = "flex flex-col md:flex-row h-full";
                 card.appendChild(flexWrapper);
 
-                // 3. Create Image Container
                 const imgContainer = document.createElement('div');
                 imgContainer.className = "md:w-2/5 h-64 md:h-auto relative bg-orange-50 overflow-hidden group";
                 flexWrapper.appendChild(imgContainer);
 
-                // 4. Create Image Element
-                // FIX: Access 'week.image' not 'week.photos'
-                // Also added a fallback to the first item in the array
-                const imgUrl = week.image && week.image.length > 0 ? week.image[0] : '';
-                
+                // Image Element
                 const img = document.createElement('img');
                 img.alt = week.title;
                 img.className = "absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-110 cursor-pointer";
-                // Use a seed based on the week number for the fallback image
-                const fallbackUrl = `https://picsum.photos/seed/week${week.week}/600/800`;
                 
-                img.src = imgUrl || fallbackUrl;
-                
-                // Click to open modal
-                img.onclick = () => openModal(img.src || fallbackUrl, week.title);
+                // Set source
+                img.src = week.image;
 
-                // Fallback logic: If local file fails (because it's not on the web server), load a placeholder
+                // Fallback Logic: If local image fails, load a placeholder from the web
                 img.onerror = function() {
-                    // Prevent infinite loop if fallback also fails (unlikely with picsum)
+                    const fallbackUrl = `https://picsum.photos/seed/week${week.week}/600/800`;
                     if (this.src !== fallbackUrl) {
                         this.src = fallbackUrl;
                     }
                 };
 
+                // Click to open modal
+                img.onclick = () => openModal(img.src, week.title);
+
                 imgContainer.appendChild(img);
 
-                // Add Week Badge
+                // Badge
                 const badge = document.createElement('div');
                 badge.className = "absolute top-4 left-4 bg-orange-600/90 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide shadow-sm z-10";
                 badge.innerText = `Week ${week.week}`;
                 imgContainer.appendChild(badge);
 
-                // 5. Create Text Section
+                // Text Content
                 const textContainer = document.createElement('div');
                 textContainer.className = "p-8 md:p-10 md:w-3/5 flex flex-col justify-center";
                 flexWrapper.appendChild(textContainer);
 
-                // 6. Title
                 const h2 = document.createElement('h2');
                 h2.className = "text-2xl md:text-3xl font-bold text-orange-900 mb-4 leading-tight";
                 h2.innerText = week.title;
                 textContainer.appendChild(h2);
 
-                // 7. Divider
                 const line = document.createElement('div');
                 line.className = "h-1 w-20 bg-orange-200 mb-6 rounded-full";
                 textContainer.appendChild(line);
 
-                // 8. Description
                 const p = document.createElement('p');
                 p.className = "text-stone-600 leading-relaxed text-lg text-justify";
                 p.innerText = week.desc;
                 textContainer.appendChild(p);
 
-                // 9. Append to main container
                 container.appendChild(card);
             });
-        } else {
-            console.error("Container element #journal-container not found.");
         }
 
         // ──────────────────────────────────────
@@ -263,34 +250,20 @@
         const closeBtn = document.getElementById('closeModal');
 
         function openModal(src, title) {
-            modal.classList.remove('hidden');
-            // Small timeout to allow display:block to apply before opacity transition
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-            }, 10);
-            
+            modal.classList.add('active');
             modalImg.src = src;
             caption.innerText = title || "Activity Photo";
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300); // Match transition duration
-            document.body.style.overflow = 'auto'; // Restore scrolling
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
 
         closeBtn.addEventListener('click', closeModal);
-        
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
     </script>
 </body>
